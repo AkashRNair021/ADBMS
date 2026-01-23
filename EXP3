@@ -1,10 +1,10 @@
-CREATE TABLE Customer (
+CREATE TABLE Customer1 (
     CustomerID INT PRIMARY KEY,
     Name VARCHAR(50),
     City VARCHAR(30)
 );
 
-CREATE TABLE Product (
+CREATE TABLE Product1 (
     ProductID INT PRIMARY KEY,
     ProductName VARCHAR(50),
     Price NUMBER(10),
@@ -12,51 +12,51 @@ CREATE TABLE Product (
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );
 
-INSERT INTO Customer VALUES (1,'Alice','Kochi');
-INSERT INTO Customer VALUES (2,'Babu','Trivandrum');
-INSERT INTO Customer VALUES (3,'Chitra','Kollam');
-INSERT INTO Customer VALUES (4,'siva','Kottayam');
-INSERT INTO Customer VALUES (5,'sandhya','Trivandrum');
+INSERT INTO Customer1 VALUES (1,'Alice','Kochi');
+INSERT INTO Customer1 VALUES (2,'Babu','Trivandrum');
+INSERT INTO Customer1 VALUES (3,'Chitra','Kollam');
+INSERT INTO Customer1 VALUES (4,'siva','Kottayam');
+INSERT INTO Customer1 VALUES (5,'sandhya','Trivandrum');
 
-INSERT INTO Product VALUES (101,'Laptop', 5500, 1);
-INSERT INTO Product VALUES (102,'Mobile', 15000, 2);
-INSERT INTO Product VALUES (103,'Tablet', 20000, 3);
-INSERT INTO Product VALUES (104,'Printer', 10000, 4);
-INSERT INTO Product VALUES (105,'Monitor', 12000, 5);
+INSERT INTO Product1 VALUES (101,'Laptop', 5500, 1);
+INSERT INTO Product1 VALUES (102,'Mobile', 15000, 2);
+INSERT INTO Product1 VALUES (103,'Tablet', 20000, 3);
+INSERT INTO Product1 VALUES (104,'Printer', 10000, 4);
+INSERT INTO Produc1t VALUES (105,'Monitor', 12000, 5);
 
-SELECT * FROM Product;
+SELECT * FROM Product1;
 
-SELECT Name, City FROM Customer;
+SELECT Name, City FROM Customer1;
 
-SELECT * FROM Customer WHERE City = 'Kochi';
+SELECT * FROM Customer1 WHERE City = 'Kochi';
 
-SELECT * FROM Product WHERE Price > 15000;
+SELECT * FROM Product1 WHERE Price > 15000;
 
 SELECT CustomerID, COUNT(*) AS TotalProducts
-FROM Product
+FROM Product1
 GROUP BY CustomerID;
 
 SELECT CustomerID, AVG(Price) AS AvgPrice
-FROM Product
+FROM Product1
 GROUP BY CustomerID;
 
 SELECT CustomerID, AVG(Price) AS AvgPrice
-FROM Product
+FROM Product1
 GROUP BY CustomerID
 HAVING AVG(Price) > 12000;
 
 
-SELECT * FROM Product ORDER BY Price ASC;
+SELECT * FROM Product1 ORDER BY Price ASC;
 
 
-SELECT * FROM Customer ORDER BY Name DESC;
+SELECT * FROM Customer1 ORDER BY Name DESC;
 
 
-SELECT * FROM Customer
+SELECT * FROM Customer1
 WHERE CustomerID IN (SELECT CustomerID FROM Product WHERE Price > 15000);
 
 
-SELECT * FROM Product
+SELECT * FROM Product1
 WHERE Price = (SELECT MAX(Price) FROM Product);
 
 
