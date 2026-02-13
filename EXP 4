@@ -1,24 +1,23 @@
 -- ==============================
--- EXPERIMENT NO. 4
--- OPTIMIZING DATABASES
+-- EXPERIMENT NO. 4 (RENAMED)
 -- ==============================
 
 -- 1. Create LOCATION table
-CREATE TABLE Location (
+CREATE TABLE Location_Exp4 (
     loc_id INT PRIMARY KEY,
     city VARCHAR(50)
 );
 
 -- 2. Create DEPARTMENT table
-CREATE TABLE Department (
+CREATE TABLE Department_Exp4 (
     dept_id INT PRIMARY KEY,
     dept_name VARCHAR(50),
     loc_id INT,
-    FOREIGN KEY (loc_id) REFERENCES Location(loc_id)
+    FOREIGN KEY (loc_id) REFERENCES Location_Exp4(loc_id)
 );
 
 -- 3. Create JOB table
-CREATE TABLE Job (
+CREATE TABLE Job_Exp4 (
     job_id INT PRIMARY KEY,
     job_title VARCHAR(50),
     min_salary NUMBER(10),
@@ -26,136 +25,117 @@ CREATE TABLE Job (
 );
 
 -- 4. Create EMPLOYEE table
-CREATE TABLE Employee (
+CREATE TABLE Employee_Exp4 (
     emp_id INT PRIMARY KEY,
     emp_name VARCHAR(50),
     salary NUMBER(10),
     job_id INT,
     dept_id INT,
-    FOREIGN KEY (job_id) REFERENCES Job(job_id),
-    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+    FOREIGN KEY (job_id) REFERENCES Job_Exp4(job_id),
+    FOREIGN KEY (dept_id) REFERENCES Department_Exp4(dept_id)
 );
 
 -- ==============================
 -- INSERT DATA
 -- ==============================
 
--- 5. Insert into Location
-INSERT INTO Location VALUES (1, 'Kochi');
-INSERT INTO Location VALUES (2, 'Trivandrum');
-INSERT INTO Location VALUES (3, 'Kozhikode');
-INSERT INTO Location VALUES (4, 'Kollam');
-INSERT INTO Location VALUES (5, 'Kottayam');
+INSERT INTO Location_Exp4 VALUES (1, 'Kochi');
+INSERT INTO Location_Exp4 VALUES (2, 'Trivandrum');
+INSERT INTO Location_Exp4 VALUES (3, 'Kozhikode');
+INSERT INTO Location_Exp4 VALUES (4, 'Kollam');
+INSERT INTO Location_Exp4 VALUES (5, 'Kottayam');
 
--- 6. Insert into Department
-INSERT INTO Department VALUES (10, 'HR', 1);
-INSERT INTO Department VALUES (20, 'Finance', 2);
-INSERT INTO Department VALUES (30, 'IT', 3);
-INSERT INTO Department VALUES (40, 'HR', 4);
-INSERT INTO Department VALUES (50, 'IT', 5);
+INSERT INTO Department_Exp4 VALUES (10, 'HR', 1);
+INSERT INTO Department_Exp4 VALUES (20, 'Finance', 2);
+INSERT INTO Department_Exp4 VALUES (30, 'IT', 3);
+INSERT INTO Department_Exp4 VALUES (40, 'HR', 4);
+INSERT INTO Department_Exp4 VALUES (50, 'IT', 5);
 
--- 7. Insert into Job
-INSERT INTO Job VALUES (100, 'Manager', 50000, 100000);
-INSERT INTO Job VALUES (101, 'Developer', 30000, 70000);
-INSERT INTO Job VALUES (102, 'Clerk', 20000, 40000);
-INSERT INTO Job VALUES (103, 'Staff', 25000, 40000);
-INSERT INTO Job VALUES (104, 'Tester', 35000, 60000);
+INSERT INTO Job_Exp4 VALUES (100, 'Manager', 50000, 100000);
+INSERT INTO Job_Exp4 VALUES (101, 'Developer', 30000, 70000);
+INSERT INTO Job_Exp4 VALUES (102, 'Clerk', 20000, 40000);
+INSERT INTO Job_Exp4 VALUES (103, 'Staff', 25000, 40000);
+INSERT INTO Job_Exp4 VALUES (104, 'Tester', 35000, 60000);
 
--- 8. Insert into Employee
-INSERT INTO Employee VALUES (1, 'Anu', 60000, 100, 10);
-INSERT INTO Employee VALUES (2, 'Dev', 40000, 101, 30);
-INSERT INTO Employee VALUES (3, 'Athira', 25000, 102, 20);
-INSERT INTO Employee VALUES (4, 'Tini', 35000, 101, 40);
-INSERT INTO Employee VALUES (5, 'Ibin', 29000, 102, NULL);
+INSERT INTO Employee_Exp4 VALUES (1, 'Anu', 60000, 100, 10);
+INSERT INTO Employee_Exp4 VALUES (2, 'Dev', 40000, 101, 30);
+INSERT INTO Employee_Exp4 VALUES (3, 'Athira', 25000, 102, 20);
+INSERT INTO Employee_Exp4 VALUES (4, 'Tini', 35000, 101, 40);
+INSERT INTO Employee_Exp4 VALUES (5, 'Ibin', 29000, 102, NULL);
 
 -- ==============================
 -- JOINS
 -- ==============================
 
--- 9. INNER JOIN (Employee with Job)
 SELECT e.emp_name, j.job_title
-FROM Employee e
-INNER JOIN Job j ON e.job_id = j.job_id;
+FROM Employee_Exp4 e
+INNER JOIN Job_Exp4 j ON e.job_id = j.job_id;
 
--- 10. LEFT JOIN (All employees with department names)
 SELECT e.emp_name, d.dept_name
-FROM Employee e
-LEFT JOIN Department d ON e.dept_id = d.dept_id;
+FROM Employee_Exp4 e
+LEFT JOIN Department_Exp4 d ON e.dept_id = d.dept_id;
 
--- 11. RIGHT JOIN (All departments and employees working in them)
 SELECT d.dept_name, e.emp_name
-FROM Department d
-RIGHT JOIN Employee e ON d.dept_id = e.dept_id;
+FROM Department_Exp4 d
+RIGHT JOIN Employee_Exp4 e ON d.dept_id = e.dept_id;
 
 -- ==============================
 -- AGGREGATE FUNCTIONS
 -- ==============================
 
--- 12. Total salary per department
 SELECT d.dept_name, SUM(e.salary) AS total_salary
-FROM Employee e
-JOIN Department d ON e.dept_id = d.dept_id
+FROM Employee_Exp4 e
+JOIN Department_Exp4 d ON e.dept_id = d.dept_id
 GROUP BY d.dept_name;
 
--- 13. Average salary per job title
 SELECT j.job_title, AVG(e.salary) AS avg_salary
-FROM Employee e
-JOIN Job j ON e.job_id = j.job_id
+FROM Employee_Exp4 e
+JOIN Job_Exp4 j ON e.job_id = j.job_id
 GROUP BY j.job_title;
 
--- 14. Minimum salary
-SELECT MIN(salary) AS min_salary FROM Employee;
+SELECT MIN(salary) AS min_salary FROM Employee_Exp4;
 
--- 15. Maximum salary among employees in IT department
 SELECT MAX(e.salary) AS max_salary
-FROM Employee e
-JOIN Department d ON e.dept_id = d.dept_id
+FROM Employee_Exp4 e
+JOIN Department_Exp4 d ON e.dept_id = d.dept_id
 WHERE d.dept_name = 'IT';
 
 -- ==============================
 -- SQL OPERATORS
 -- ==============================
 
--- 16. Names starting with 'A'
 SELECT emp_name
-FROM Employee
+FROM Employee_Exp4
 WHERE emp_name LIKE 'A%';
 
--- 17. Names ending with 'a'
 SELECT emp_name
-FROM Employee
+FROM Employee_Exp4
 WHERE emp_name LIKE '%a';
 
--- 18. Employees working in HR or Finance
 SELECT emp_name
-FROM Employee
+FROM Employee_Exp4
 WHERE dept_id IN (10, 20);
 
--- 19. Employees not working in IT (dept_id 30)
 SELECT emp_name
-FROM Employee
+FROM Employee_Exp4
 WHERE dept_id NOT IN (30);
 
--- 20. Salary > 30000 and working in IT
 SELECT e.emp_name
-FROM Employee e
-JOIN Department d ON e.dept_id = d.dept_id
+FROM Employee_Exp4 e
+JOIN Department_Exp4 d ON e.dept_id = d.dept_id
 WHERE e.salary > 30000
 AND d.dept_name = 'IT';
 
--- 21. Salary < 25000 or working in HR
 SELECT e.emp_name
-FROM Employee e
-JOIN Department d ON e.dept_id = d.dept_id
+FROM Employee_Exp4 e
+JOIN Department_Exp4 d ON e.dept_id = d.dept_id
 WHERE e.salary < 25000
 OR d.dept_name = 'HR';
 
--- 22. Salary between 30000 and 50000
 SELECT emp_name, salary
-FROM Employee
+FROM Employee_Exp4
 WHERE salary BETWEEN 30000 AND 50000;
 
--- 23. Job titles with min_salary between 25000 and 60000
 SELECT job_title, min_salary
-FROM Job
+FROM Job_Exp4
 WHERE min_salary BETWEEN 25000 AND 60000;
